@@ -1,0 +1,25 @@
+.Badge__hero--container {
+  display: flex;
+  justify-content: space-around;
+}
+.Badge-hero--main {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Badge-hero--main h1,
+.Badge-hero--main p {
+  color: aliceblue;
+}
+.Badge-hero--main img {
+  width: 50%;
+  height: 50vh;
+}
+.Badge-hero--main:last-child {
+  justify-content: center;
+}
+.Badge-hero--main:last-child img {
+  width: 100%;
+  height: 60vh;
+}
