@@ -3,7 +3,7 @@ import './styles/BadgeDetails.css'
 import confLogo from '../images/platzi-conf-logo.svg'
 import Badge from '../components/Badge';
 import {Link} from 'react-router-dom';
-
+import DeleteBadgeModal from '../components/DeleteBadgeModal';
 // Aqui dividimos las responsabilidades entre la UI y la programacion interna
 
 function BadgeDetails(props) {
@@ -41,7 +41,8 @@ function BadgeDetails(props) {
                                 </Link>
                             </div>
                             <div>
-                                <button className="btn btn-danger">Delete</button>
+                                <button onClick={props.onOpenModal} className="btn btn-danger">Delete</button>
+                                <DeleteBadgeModal onDeleteBadge={props.onDeleteBadge} isOpen={props.modalIsOpen} onClose={props.onCloseModal}/>
                             </div>
                         </div>
                     </div>

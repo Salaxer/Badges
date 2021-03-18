@@ -33,7 +33,7 @@ class Badge extends React.Component {
             </div>
             <div className="Badge_section-info">
                 <p>{jobTitle}</p>
-                <a href={"https://twitter.com/"+twitter}>@{twitter}</a>
+                <a target="_blank" rel="noopener noreferrer" href={"https://twitter.com/"+twitter}>@{twitter}</a>
             </div>
             <div className="Badge_footer">
                 #platziConf
