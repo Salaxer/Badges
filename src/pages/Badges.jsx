@@ -15,7 +15,7 @@ class Badges extends React.Component {
     this.state = {
       loading: true,
       error: null,
-      data: [],
+      data: undefined,
     };
   }
 // despues del render se ejecuta el componente
@@ -24,6 +24,7 @@ class Badges extends React.Component {
     // console.log('3. componentDidMount()');
     this.fetchData();
     // todo timeout o datos asincrono debe tener la posibilidad de terminarse
+    this.intervalId = setInterval(this.fetchData,5000);
   }
 
   fetchData = async() =>{
@@ -48,12 +49,12 @@ class Badges extends React.Component {
   // esta accion sucede cuando el componente deja de existir.
   componentWillUnmount(){
     console.log('6. componentwillUnmount()');
-    clearTimeout(this.timeoutID);
+    clearInterval(this.intervalId);
   }
   // El render se ejecuta en segundo lugar con toda la info recolectada en contructor
   render() {
     console.log('2/4. render()');
-    if(this.state.loading === true){
+    if(this.state.loading === true && !this.state.data){
       return (
         <PageLoading/>
       );

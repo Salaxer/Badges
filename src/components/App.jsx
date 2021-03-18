@@ -6,6 +6,7 @@ import Index from '../pages/Index';
 import Layout from './Layout';
 import Notfound from './Notfound'
 import BadgeEdit from '../pages/BadgeEdit';
+import BadgeDetails from '../pages/BadgeDetailsContainer';
 
 function App() {
     return(
@@ -17,6 +18,8 @@ function App() {
                     <Route exact path='/badges/new' component={BadgeNew}/>
                     <Route exact path='/badges/:badgeId/edit' component={BadgeEdit}/>
                     {/* Podemos colocar una variable dentro de un link */}
+                    {/* Esa variable la podemos acceder con this.props.match.params. la id */}
+                    <Route exact path='/badges/:badgeId' component={BadgeDetails}/>
                     <Route component={Notfound}/>
                 </Switch>
             </Layout>

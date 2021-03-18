@@ -18,7 +18,6 @@ class BadgeForm extends React.Component{
     render(){
         return(
             <div style={{padding: '0 0 50px 0'}}>
-                <h1>New Attendant</h1>
                 <form onSubmit={this.props.onSubmit}>
                     <div className="form-group">
                         <label>Firs Name</label>

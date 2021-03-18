@@ -66,6 +66,7 @@ class BadgeNew extends React.Component{
                             email= {this.state.form.email || 'EMAIL'}/>
                         </div>
                         <div className="col-6">
+                            <h1>Edit Attendant</h1>
                             <BadgeForm 
                             onSubmit={this.handleSubmit}
                             onChange={this.handleChange} 

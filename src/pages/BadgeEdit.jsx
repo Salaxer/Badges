@@ -9,7 +9,7 @@ import PageLoading from '../components/PageLoading';
 
 class BadgeEdit extends React.Component{
     state={
-        loading: false,
+        loading: true,
         error:  null,
         form: {
             firstName: '',
@@ -20,12 +20,36 @@ class BadgeEdit extends React.Component{
             avatarUrl: ''
         }
     }
+    componentDidMount(){
+        this.fetchData();
+        console.log(this.props.match);
+    }
+    fetchData = async (e) =>{
+        this.setState({
+            loading: true,
+            error: null,
+        })
+        try{
+            const data = await api.badges.read(
+                this.props.match.params.badgeId
+            )
+            this.setState({
+                loading: false,
+                form:  data
+            })
+        }catch(error){
+            this.setState({
+                loading: false,
+                error,
+            })
+        }
+    }
     handleSubmit = async e => {
         e.preventDefault();
         this.state.form.avatarUrl = `https://s.gravatar.com/avatar/${md5(this.state.form.email)}?d=identicon&s=120`
         this.setState({loading:true,error: null});
         try{
-            await api.badges.create(this.state.form)
+            await api.badges.update(this.props.match.params.badgeId, this.state.form)
             this.setState({loading:false});
 
             this.props.history.push('/badges')
@@ -34,9 +58,6 @@ class BadgeEdit extends React.Component{
         }
     }
     handleChange= e => {
-        // const nextForm = this.state.form;
-        // nextForm[e.target.name] = e.target.value
-
         this.setState({
             form:{
                 ...this.state.form,
@@ -66,6 +87,7 @@ class BadgeEdit extends React.Component{
                             email= {this.state.form.email || 'EMAIL'}/>
                         </div>
                         <div className="col-6">
+                            <h1>Edit Attendant</h1>
                             <BadgeForm 
                             onSubmit={this.handleSubmit}
                             onChange={this.handleChange} 
