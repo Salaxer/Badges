@@ -25,36 +25,66 @@ class BadgesListItem extends React.Component {
     );
   }
 }
+function useSerachBadges(badges){
+  const [query, setQuery] = React.useState('');
 
-class BadgesList extends React.Component {
-  render() {
-    console.log(`Hola ${this.props.badges.length}`);
-    if(this.props.badges.length === 0){
-      return(
-        <div>
-          <h3>No badges were found</h3>
-          <Link className="btn btn-primary" to="/badges/new">
-            Create new badge
-          </Link>
-        </div>
-      ) 
+  const [filterBadges, setFilterBadges] = React.useState(badges);
+
+  React.useMemo(() => {
+    const result = badges.filter(badge =>{
+      return `${badge.firstName} ${badge.lastName}`.toLowerCase().includes(query.toLowerCase());
+    })
+    if(filterBadges.length !== result.length){
+      setFilterBadges(result);
     }
-    return (
-      <div className="BadgesList">
-        <ul className="list-unstyled">
-          {this.props.badges.reverse().map(badge => {
-            return (
-              <li key={badge.id}>
-                <Link className="text-reset text-decoration-none" to={`/badges/${badge.id}`}>
-                  <BadgesListItem badge={badge} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+  },[badges, query] //eso es lo que ocupa el useMemo
+  )
+  return {query, setQuery, filterBadges}
+}
+function BadgesList (props) {
+  const badges= props.badges;
+  const {query, setQuery, filterBadges} = useSerachBadges(badges);
+  if(filterBadges.length === 0){
+    return(
+      <div>
+        <div className="form-group">
+        <label htmlFor="">Filter Badges</label>
+        <input 
+        value={query} 
+        onChange={(e) =>{
+          setQuery(e.target.value);
+        }} type="text" className="form-control"/>
       </div>
-    );
+        <h3>No badges were found</h3>
+        <Link className="btn btn-primary" to="/badges/new">
+          Create new badge
+        </Link>
+      </div>
+    ) 
   }
+  return (
+    <div className="BadgesList">
+      <div className="form-group">
+        <label htmlFor="">Filter Badges</label>
+        <input 
+        value={query} 
+        onChange={(e) =>{
+          setQuery(e.target.value);
+        }} type="text" className="form-control"/>
+      </div>
+      <ul className="list-unstyled">
+        {filterBadges.map(badge => {
+          return (
+            <li key={badge.id}>
+              <Link className="text-reset text-decoration-none" to={`/badges/${badge.id}`}>
+                <BadgesListItem badge={badge} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
 
 export default BadgesList;
